@@ -16,7 +16,8 @@ AFTER DELETE
 AS
 BEGIN
 	INSERT INTO LeasingDeleteLog (LeasingInfo_id, Start_date, End_date, Property_id, Tenant_id)
-	SELECT LeasingInfo_id, Start_date, End_date, Property_id, Tenant_id FROM deleted
+	SELECT LeasingInfo_id, Start_date, End_date, Property_id, Tenant_id FROM deleted d
+	UPDATE Property SET Is_available_for_rent = 1 WHERE Property_ID IN (SELECT Property_id FROM deleted); 
 END
 
 SELECT * FROM Leasing_Info
